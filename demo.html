@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <meta charset="utf-8">
+        <meta name="robots" content="noindex, nofollow">
+
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+         <link href="https://fonts.googleapis.com/css?family=News+Cycle:400,700" rel="stylesheet">
+         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css?family=News+Cycle:400,700" rel="stylesheet">
+        <style type="text/css">
+
+        .translate_wrapper{
+          position:absolute;
+          z-index:1;
+          top:20px;
+          left:20px;
+          font-size:16px;
+          background:#fff;
+          border-radius:4px;
+        }
+
+        .current_lang{
+          cursor:pointer;
+          text-transform:uppercase;
+          overflow:hidden;
+        }
+
+        .lang{
+            padding:10px 15px;
+        }
+
+        .lang.selected{
+          display:none;
+        }
+
+        .lang img,
+        .lang span.lang-txt{
+          display:inline-block;
+          margin-left:5px;
+          vertical-align:middle;
+        }
+
+        .lang span.lang-txt{
+           position:relative;
+          top:-1px;
+          font-weight:700;
+        }
+
+        .lang img{
+          width:20px;
+          margin-left:0;
+        }
+
+        .lang span span{
+          color:#999;
+          font-weight:400;
+        }
+
+        .lang span.fa{
+          font-size:12px;
+          position:relative;
+          top:-1px;
+          margin-left:3px;
+        }
+
+
+        /*more lang*/
+        .more_lang{
+          transform:translateY(-20px);
+          opacity:0;
+          cursor:pointer;
+          display:none;
+           -webkit-transition: all .3s cubic-bezier(.25, 1.15, .35, 1.15);
+        	-moz-transition:    all .3s cubic-bezier(.25, 1.15, .35, 1.15);
+        	-o-transition:      all .3s cubic-bezier(.25, 1.15, .35, 1.15);
+        	-ms-transition:     all .3s cubic-bezier(.25, 1.15, .35, 1.15);
+        	transition:         all .3s cubic-bezier(.25, 1.15, .35, 1.15);
+        }
+
+        .translate_wrapper.active .more_lang{
+          display:block;
+        }
+
+        .more_lang.active{
+          opacity:1;
+           transform:translateY(-0px);
+        }
+
+        .more_lang .lang:hover{
+          background:#5766b2;
+          color:#fff;
+        }
+
+        .more_lang .lang:hover span{
+          color:#fff;
+        }
+
+        .translate_wrapper:hover,
+        .translate_wrapper.active,
+        .content a:hover{
+          box-shadow:rgba(0,0,0,0.2) 0 5px 15px;
+          -webkit-transition: all 0.3s cubic-bezier(0,.99,.44,.99);
+        	-moz-transition:    all 0.3s cubic-bezier(0,.99,.44,.99);
+        	-o-transition:      all 0.3s cubic-bezier(0,.99,.44,.99);
+        	-ms-transition:     all 0.3s cubic-bezier(0,.99,.44,.99);
+        	transition:         all 0.3s cubic-bezier(0,.99,.44,.99);
+
+        }
+
+        .translate_wrapper.active .lang{
+          border-bottom:1px solid #eaeaea;
+        }
+
+        /*CONTENT*/
+        .content{
+          width:100%;
+          max-width:400px;
+          position:absolute;
+          top:50%;
+          left:50%;
+          -ms-transform: translateX(-50%) translateY(-50%);
+          -webkit-transform: translate(-50%,-50%);
+          transform: translate(-50%,-50%);
+          border-radius:2px;
+          padding:20px;
+          -webkit-box-sizing: border-box;
+        	-moz-box-sizing: border-box;
+        	box-sizing: border-box;
+
+          text-align:center;
+        }
+        .content a,
+        .content h1,
+        .content h2,
+        .content h3,
+        .content p{
+          margin:0;
+        }
+
+        .content p{
+           line-height:22px;
+          text-align:left;
+          margin-top:15px;
+        }
+
+
+        .content div.ct-img{
+          width:150px;
+          height:150px;
+          overflow:hidden;
+          border-radius:50%;
+          margin:0 auto 10px;
+        }
+
+        .content div img{
+          height:100%;
+          position:relative;
+          left:-30px;
+        }
+
+        .content a{
+          padding: 8px 15px 10px;
+           border-radius:4px;
+          background:#5766b2;
+          color:#fff;
+          text-decoration:none;
+          display:inline-block;
+          margin-top:25px;
+          position:relative;
+          overflow:hidden;
+        }
+
+        .content a:active{
+          transform: scale(0.9);
+           -webkit-transform: scale(0.9);
+          -moz-transform: scale(0.9);
+        }
+
+        /*RTL*/
+        body[dir="rtl"] .translate_wrapper{
+          right:20px;
+          left:auto;
+        }
+
+        body[dir="rtl"] .lang marquee.fa{
+          margin-right:3px;
+          margin-left:0;
+        }
+
+        body[dir="rtl"] .lang .lang-txt{
+          margin-right:5px;
+          margin-left:0;
+        }
+
+        body[dir="rtl"] .content div img{
+          left:auto;
+          right:-30px;
+        }
+
+
+        body[dir="rtl"] .content p{
+          text-align:right;
+        }
+
+        body[dir="rtl"] .lang marquee{
+          float:left;
+          margin-right:5px;
+        }
+        #h1style{
+          position: relative;
+          top:400px;
+        }
+      body {
+        background-color: #fff2e6;
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      .topnav {
+        overflow: hidden;
+        background-color: #fff2e6;
+        float: right;
+      }
+
+      .topnav a {
+        float: left;
+        color: #003399;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 17px;
+        background-color: #fff2e6;
+
+      }
+
+      .topnav a:hover {
+        background-color: #fff2e6;
+        color: #1e75b8;
+      }
+
+      .topnav a.active {
+        background-color: #fff2e6;
+        color: #ff890a;
+      }
+      .interviewAd{
+        width: 1600px;
+        height: 50px;
+        background-color: transparent;
+        color:white;
+        position: relative;
+        animation-name: example;
+        animation-duration:3s;
+        animation-iteration-count: infinite;
+      }
+
+      .navbar {
+        overflow: hidden;
+        background-color: #fff2e6;
+        bottom: 0;
+        width: 100%;
+      }
+
+      .navbar a {
+        float: left;
+        display: block;
+        color: #003399;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 17px;
+      }
+
+      .navbar a:hover {
+        background: #fff2e6;
+        color: #1e75b8;
+      }
+
+      .navbar a.active {
+        background-color: #fff2e6;
+        color: #ff890a;
+      }
+
+      .main {
+        padding: 16px;
+        margin-bottom: 30px;
+      }
+      @keyframes example {
+        5%   {background-color:transparent; left:500px; top:0px;}
+        25%  {background-color:transparent; left:-500px; top:0px;}
+
+      }
+      input[type=text], select {
+        width: 60%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+
+            body {
+              padding: 0;
+              margin: 0;
+            }
+
+            svg:not(:root) {
+              display: block;
+            }
+
+            .playable-code {
+              background-color: #f4f7f8;
+              border: none;
+              border-left: 6px solid #558abb;
+              border-width: medium medium medium 6px;
+              color: #4d4e53;
+              height: 100px;
+              width: 90%;
+              padding: 10px 10px 0;
+            }
+
+            .playable-canvas {
+              border: 1px solid #4d4e53;
+              border-radius: 2px;
+            }
+
+            .playable-buttons {
+              text-align: right;
+              width: 90%;
+              padding: 5px 10px 5px 26px;
+            }
+        </style>
+
+        <style type="text/css">
+            body {
+  font: 14px "Open Sans", "Arial", sans-serif;
+}
+
+video {
+  margin-top: 2px;
+  border: 1px solid black;
+}
+
+.button {
+  cursor: pointer;
+  display: block;
+  width: 160px;
+  border: 1px solid black;
+  font-size: 16px;
+  text-align: center;
+  padding-top: 2px;
+  padding-bottom: 4px;
+  color: white;
+  background-color: darkgreen;
+  text-decoration: none;
+}
+
+h2 {
+  margin-bottom: 4px;
+}
+
+.left {
+  margin-right: 10px;
+  float: left;
+  width: 160px;
+  padding: 0px;
+}
+
+.right {
+  margin-left: 10px;
+  float: left;
+  width: 160px;
+  padding: 0px;
+}
+
+.bottom {
+  clear: both;
+  padding-top: 10px;
+}
+
+        </style>
+        <script>
+        var tnum = 'en';
+
+        $(document).ready(function(){
+
+          $(document).click( function(e) {
+               $('.translate_wrapper, .more_lang').removeClass('active');
+          });
+
+          $('.translate_wrapper .current_lang').click(function(e){
+            e.stopPropagation();
+            $(this).parent().toggleClass('active');
+
+            setTimeout(function(){
+              $('.more_lang').toggleClass('active');
+            }, 5);
+          });
+
+
+          /*TRANSLATE*/
+          translate(tnum);
+
+          $('.more_lang .lang').click(function(){
+            $(this).addClass('selected').siblings().removeClass('selected');
+            $('.more_lang').removeClass('active');
+
+            var img = $(this).find('img').attr('src');
+            var lang = $(this).attr('data-value');
+            var tnum = lang;
+            translate(tnum);
+
+            $('.current_lang .lang-txt').text(lang);
+            $('.current_lang img').attr('src', img);
+
+            if(lang == 'ar'){
+              $('body').attr('dir', 'rtl');
+            }else{
+              $('body').attr('dir', 'ltr');
+            }
+
+          });
+        });
+
+        function translate(tnum){
+          $('h1').text(trans[0][tnum]);
+          $('p').text(trans[1][tnum]);
+          $('.content a span').text(trans[2][tnum]);
+
+        }
+
+        var trans = [
+
+          {
+            en : 'How You Can Benefit From InterviewPrep.',
+            pt : 'Como você pode se beneficiar com o InterviewPrep.',
+            es : 'Cómo puede beneficiarse de InterviewPrep.',
+            fr : 'Comment vous pouvez bénéficier de InterviewPrep.',
+            de : 'Wie Sie von InterviewPrep profitieren können.',
+            cn : '您如何從InterviewPrep 中受益。',
+            ar : 'كيف يمكنك الاستفادة من مقابلة بريب.'
+          },{
+            en : 'For sheer breadth of freakish anatomical features, the chameleon has few rivals. A tongue far longer than its body, shooting out to snatch insects in a fraction of a second. Telescopic-vision eyes that swivel independently in domed turrets. Feet with toes fused into mitten-like pincers. Horns sprouting from brow and snout. Knobbly nasal ornaments. A skin flap circling the neck like a lace ruff on an Elizabethan noble.',
+            pt : 'Por uma infinidade de características anatômicas, o camaleão tem poucos rivais. Uma língua muito mais longa do que o seu corpo, disparando para pegar insetos em uma fração de segundo. Olhos de visão telescópica que giram de forma independente em torres com abóbadas. Pés com os dedos fundidos em pinças tipo luva. Chifres brotando da sobrancelha e do focinho. Ornamentos nasais knobbly. Uma aba de pele que circunda o pescoço como uma barriga de renda em um nobre isabelino.',
+            es : 'Por pura amplitud de extrañas características anatómicas, el camaleón tiene pocos rivales. Una lengua mucho más larga que su cuerpo, disparando para atrapar insectos en una fracción de segundo. Ojos de visión telescópica que giran independientemente en las torretas abovedadas. Pies con dedos de los pies fusionados en pinzas tipo mitones. Cuernos que brotan de la frente y el hocico. Adornos nasales nudosos. Una aleta de piel que rodea el cuello como una puntilla de encaje sobre un noble isabelino.',
+            fr: "Pour l'ampleur pure des caractéristiques anatomiques bizarres, le caméléon a peu de rivaux. Une langue bien plus longue que son corps, tirant pour arracher les insectes en une fraction de seconde. Yeux à vision télescopique pivotant indépendamment dans des tourelles à dôme. Pieds avec les orteils fondus dans des tenailles mitaines. Cornes qui poussent du front et du museau. Ornements nasaux Knobbly. Un lambeau de peau entourant le cou comme une collerette de dentelle sur un noble élisabéthain.",
+            de: 'Wegen der schieren Breite der anatomischen Besonderheiten hat das Chamäleon wenige Rivalen. Eine Zunge, die viel länger ist als ihr Körper und in einem Bruchteil einer Sekunde Insekten erjagt. Teleskopische Augen, die unabhängig voneinander in Kuppeltürmen schwenken. Füße mit Zehen verschmolzen zu handschuhartigen Zangen. Hörner sprießen von der Stirn und der Schnauze. Knoblige Nasenverzierungen. Ein Hautlappen umkreist den Hals wie ein Spitzenkragen an einem elisabethanischen Adligen.',
+            cn: '由于极其奇特的解剖特征，变色龙几乎没有对手。一只比它的身体长得多的舌头，在几分之一秒内射出来抓住昆虫。在圆顶炮塔中独立旋转的望远镜视力眼睛。脚趾融合成中爪状的钳子。喇叭从眉头和鼻子发芽。棘手的鼻饰。在伊丽莎白的优雅的伊丽莎白时代，像皮带一样绕着脖子的皮瓣',
+            ar : 'لمجرد اتساع الميزات التشريحية فظيع، والحرباء لديها منافسيه قليلة. اللسان أطول بكثير من جسمه، واطلاق النار لانتزاع الحشرات في جزء صغير من الثانية. عيون الرؤية تلسكوبية التي قطب بشكل مستقل في الأبراج القبة. قدم مع أصابع تنصهر في وسط-- مثل بينكرز. هورنز، تبرعم، من، الحواجب، أيضا، سنوت. نوبل الحلي الأنفية. جلد رفرف تحلق الرقبة مثل الرباط روف على إليزابيثية أنيقة.'
+          },
+          {
+            en : 'InterviewPrep is designed to provide you with the proper tools and techniques to prepare for both face-to-face and virtual interviews. Explore InterviewPrep now for free, for additional practice and tips on how to be successful during an interview.',
+            pt : 'O InterviewPrep foi projetado para fornecer as ferramentas e técnicas adequadas para se preparar para entrevistas pessoais e virtuais. Explore o InterviewPrep agora gratuitamente, para prática adicional e dicas sobre como ter sucesso durante uma entrevista.',
+            es : 'InterviewPrep está diseñado para brindarle las herramientas y técnicas adecuadas para prepararse tanto para entrevistas presenciales como virtuales. Explore InterviewPrep ahora de forma gratuita, para obtener práctica adicional y consejos sobre cómo tener éxito durante una entrevista.',
+            fr : 'InterviewPrep est conçu pour vous fournir les outils et les techniques appropriés pour vous préparer aux entretiens en face à face et virtuels. Explorez InterviewPrep maintenant gratuitement, pour une pratique supplémentaire et des conseils sur la façon de réussir lors d''un entretien.',
+            de : 'InterviewPrep wurde entwickelt, um Ihnen die richtigen Tools und Techniken zur Vorbereitung auf persönliche und virtuelle Interviews zur Verfügung zu stellen. Entdecken Sie InterviewPrep jetzt kostenlos, um zusätzliche Übungen und Tipps für erfolgreiches Vorstellungsgespräch zu erhalten.',
+            cn : 'InterviewPrep 旨在為您提供適當的工具和技術，以準備面對面和虛擬面試。 現在免費探索InterviewPrep，獲取更多關於如何在面試中取得成功的練習和技巧。',
+            ar : 'تم تصميم InterviewPrep لتزويدك بالأدوات والتقنيات المناسبة للتحضير للمقابلات الافتراضية وجهاً لوجه. استكشف InterviewPrep الآن مجانًا ، للحصول على مزيد من الممارساتوالنصائح حول كيفية أن تكون ناجحًا أثناء المقابلة.';
+          },
+        ];
+        </script>
+        <nav>
+          <a><img src="interviewpreplogo.png" alt="logo" width="10%;" height="15%;"></a>
+          <div class="topnav">
+        <a href="index.html"><u>Home</u></a>
+        <a href="contact.html"><u>Contact</u></a>
+        <a href="about.html"><u>About</u></a>
+        <a class="active" href="demo.html"><u>InterviewPrep Simulator</u></a>
+        <a href="tips.html"><u>Interview Tips</u></a>
+        <div class="translate_wrapper">
+          <div class="current_lang">
+            <div class="lang">
+              <img src="https://image.flaticon.com/icons/svg/299/299722.svg">
+              <span class="lang-txt">EN</span>
+              <span class="fa fa-chevron-down chevron"></span>
+            </div>
+          </div>
+
+
+
+
+
+          <div class="more_lang">
+
+            <div class="lang" data-value='cn'>
+              <img src="https://image.flaticon.com/icons/svg/299/299914.svg">
+              <span class="lang-txt">简体中文</span>
+            </div>
+
+            <div class="lang selected" data-value='en'>
+              <img src="https://image.flaticon.com/icons/svg/299/299722.svg">
+              <span class="lang-txt">English<span> (US)</span></span>
+            </div>
+
+
+             <div class="lang" data-value='de'>
+              <img src="https://image.flaticon.com/icons/svg/299/299786.svg">
+              <span class="lang-txt">Deutsch</span>
+            </div>
+
+            <div class="lang" data-value='es'>
+              <img src="https://image.flaticon.com/icons/svg/299/299820.svg">
+              <span class="lang-txt">Español</span>
+            </div>
+
+
+            <div class="lang" data-value='fr'>
+              <img src="https://image.flaticon.com/icons/svg/299/299753.svg">
+              <span class="lang-txt">Français</span>
+            </div>
+
+
+            <div class="lang" data-value="pt">
+              <img src="https://image.flaticon.com/icons/svg/299/299693.svg">
+              <span class="lang-txt">Português<span> (BR)</span></span>
+            </div>
+
+            <div class="lang" data-value="ar">
+              <img src="https://image.flaticon.com/icons/svg/299/299815.svg">
+              <span class="lang-txt">العربية <span> (SA)</span></span>
+            </div>
+
+
+
+          </div>
+
+
+        </div>
+
+
+        <div class="content">
+          <div class="ct-img">
+            <img src="https://traceyrickard.co.uk/wp-content/uploads/2015/09/lizard-765x510.jpg">
+          </div>
+          <div class="ct-txt">
+            <h1></h1>
+            <p></p>
+            <a href="#"><span>Link</span></a>
+          </div>
+        </div>
+        </div>
+          </nav>
+          <div style="background-color:#1e75b8;">
+            <marquee behavior="scroll" direction="left" style="color:white; font-size:120%;">InterviewPrep is designed to provide you with the proper tools and techniques to prepare for both face-to-face and virtual interviews. Explore InterviewPrep now for free, for additional practice and tips on how to be successful during an interview.</marquee>
+          </div>
+          <center>
+            <div class="simulator">
+              <img src="84608878165daf8fb910ab5ca5418c4a.jpg" alt="homeimage" id="interviewbg" style="width:100%; height:120%; border-color: black; border-style: solid; border-width: 3px;">
+              <button type="button" class="btn btn-primary" style="position: relative; top:-90px; right:10px; font-size:120%;" onclick="startInterview()" id="startbutn">Start Interviewing!</button>
+              <div id="buttondiv" style="display:none;">
+              <img src="images.png" alt="homeimage" id="starticon" style="width:10%; height:10%; position:relative; bottom:600px; right:300px;"onclick="startbtnInterview()">
+              <img src="write-a-review-icon-isolated-vector-28398534.png" alt="homeimage" id="reviewicon" style="width:10%; height:10%; position:relative; bottom:590px;" onclick="getAlllInterviews()">
+              <img src="2940521-200.png" alt="homeimage" id="abouticon" style="width:10%; height:10%; position:relative; bottom:575px; left:400px;" onclick="aboutInterview()">
+              </div>
+              <button type="button" class="btn btn-primary" style="position: relative; top:-90px; right:10px; font-size:120%; display:none;" onclick="startInterview()" id="backbutn">Back</button>
+              <button type="button" class="btn btn-primary" style="position: relative; top:-90px; right:10px; font-size:120%; display:none;" onclick="continueInterview()" id="continuebutn">Continue</button>
+              <button type="button" class="btn btn-primary" style="position: relative; top:-90px; right:10px; font-size:120%; display:none;" onclick="ReturntoLast()" id="returnbutn">Return</button>
+              <button type="button" class="btn btn-primary" style="position: relative; top:-90px; right:10px; font-size:120%; display:none;" onclick="InterviewMe()" id="begin">Begin!</button>
+
+            </div>
+            <h2 style=" position: relative; bottom:800px; right:10px; display:none; color:#003399;" id="starttext">Enter your desired company and position before starting the interview.</h2>
+            <label for="co"  id="company2" style=" position: relative; bottom:600px; right:10px;font-size:150%;  color:#ff890a; display:none;">Company Name:</label>
+                <input type="text" id="company" name="company" style=" position: relative; bottom:600px; right:10px; display:none;" placeholder="Enter the company name..">
+        <br>
+        <br>
+        <br>
+
+                <label for="postn" id="position2" style=" position: relative; bottom:550px; right:10px;font-size:150%;  color:#ff890a; display:none;">Position:</label>
+                <input type="text" id="position" name="position" style=" position: relative; bottom:550px; right:10px; display:none;" placeholder="Enter Job Position..">
+
+<div class="left" id="leftdiv" style="position: relative; top:-730px;display:none;">
+
+  <h2>Record Yourself below</h2>
+  <video id="preview"  width="350%;" height="350%;" autoplay="" muted="" style="background-color:black;"class="mtz-vlc-klfbf"></video>
+  <div id="startButton" class="button">
+    Start
+  </div>
+  <div id="stopButton" class="button">
+    Stop
+  </div>
+</div>
+
+
+
+<div class="bottom" style="display:none;">
+  <pre id="log">recording for 5 seconds...
+Successfully recorded 105960 bytes of video/webm media.
+</pre>
+</div>
+
+<div style=" position: relative; top:-630px;left:200px; display:none;"  id="videodiv">
+<video controls autoplay width="50%;" height="50%;">
+  <source src="part1-online-video-cuttercom_H21f3VV1_OrCF.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+</div>
+<div id="google_translate_element"></div>
+
+   <script type="text/javascript">
+       function googleTranslateElementInit() {
+           new google.translate.TranslateElement(
+               {pageLanguage: 'en'},
+               'google_translate_element'
+           );
+       }
+   </script>
+
+   <script type="text/javascript" src=
+"https://translate.google.com/translate_a/element.js?
+       cb=googleTranslateElementInit">
+   </script>
+
+   <p>
+       You can translate the content of this
+       page by selecting a language in the
+       select box.
+   </p>
+<script>
+let preview = document.getElementById("preview");
+let recording = document.getElementById("recording");
+let startButton = document.getElementById("startButton");
+let stopButton = document.getElementById("stopButton");
+let downloadButton = document.getElementById("downloadButton");
+let logElement = document.getElementById("log");
+
+let recordingTimeMS = 5000;
+
+function log(msg) {
+  logElement.innerHTML += msg + "\n";
+}
+
+function wait(delayInMS) {
+  return new Promise(resolve => setTimeout(resolve, delayInMS));
+}
+
+function startRecording(stream, lengthInMS) {
+  let recorder = new MediaRecorder(stream);
+  let data = [];
+
+  recorder.ondataavailable = event => data.push(event.data);
+  recorder.start();
+  log(recorder.state + " for " + (lengthInMS/1000) + " seconds...");
+
+  let stopped = new Promise((resolve, reject) => {
+    recorder.onstop = resolve;
+    recorder.onerror = event => reject(event.name);
+  });
+
+  let recorded = wait(lengthInMS).then(
+    () => recorder.state == "recording" && recorder.stop()
+  );
+
+  return Promise.all([
+    stopped,
+    recorded
+  ])
+  .then(() => data);
+}
+
+function stop(stream) {
+  stream.getTracks().forEach(track => track.stop());
+}
+
+startButton.addEventListener("click", function() {
+  navigator.mediaDevices.getUserMedia({
+    video: true,
+    audio: true
+  }).then(stream => {
+    preview.srcObject = stream;
+    downloadButton.href = stream;
+    preview.captureStream = preview.captureStream || preview.mozCaptureStream;
+    return new Promise(resolve => preview.onplaying = resolve);
+  }).then(() => startRecording(preview.captureStream(), recordingTimeMS))
+  .then (recordedChunks => {
+    let recordedBlob = new Blob(recordedChunks, { type: "video/webm" });
+    recording.src = URL.createObjectURL(recordedBlob);
+    downloadButton.href = recording.src;
+    downloadButton.download = "RecordedVideo.webm";
+    var userVideo = recording.src;
+    database.ref('users/'+newUserKey+'/video').set(userVideo);
+    window.alert("Video has been saved.");
+
+    log("Successfully recorded " + recordedBlob.size + " bytes of " +
+        recordedBlob.type + " media.");
+  })
+  .catch(log);
+}, false);
+
+stopButton.addEventListener("click", function() {
+  stop(preview.srcObject);
+}, false);
+            </script>
+            <script src="interview.js"></script>
+            <footer>
+              <nav>
+                <center>
+              <div class="navbar" style="margin-left: 500px;">
+                <a><i class="fa fa-copyright">InterviewPrep</i></a>
+          <a href="index.html">Home</a>
+          <a>|</a>
+          <a href="contact.html">Contact</a>
+          <a>|</a>
+          <a href="about.html">About</a>
+          </div>
+          </nav>
+          </center>
+            </footer>
+
+</body>
+<script src="https://www.gstatic.com/firebasejs/5.11.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyC7ydLDetB0DJtOsE_8ZZvOuLzx06qqAhg",
+    authDomain: "interviewprep-b3a2d.firebaseapp.com",
+    databaseURL: "https://interviewprep-b3a2d-default-rtdb.firebaseio.com/",
+    projectId: "interviewprep-b3a2d",
+    storageBucket: "interviewprep-b3a2d.appspot.com",
+    messagingSenderId: "987182914848"
+  };
+  firebase.initializeApp(config);
+  var database = firebase.database();
+  var newUserKey = database.ref().child('users').push().key;
+</script>
+</html>
